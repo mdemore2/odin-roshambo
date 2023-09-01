@@ -40,7 +40,32 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
+function game(){
+    let playerScore = 0;
+    let computerScore = 0;
+    for (let round = 0; round < 5; round++){
+        let playerSelection = prompt('Rock, Paper, or Scissors?');
+        let result = playRound(playerSelection, getComputerChoice());
+        console.log(result);
+        if (result.includes('win')) {
+            playerScore++;
+        } else if (result.includes('lose')) {
+            computerScore++;
+        }
+    }
+    console.log('FINAL SCORE: ' + playerScore + ' - ' + computerScore);
+    if (playerScore == computerScore){
+        console.log("It's a draw!");
+    } else if (playerScore > computerScore){
+        console.log('You win!');
+    } else {
+        console.log('You lose!');
+    }
+}
+
 
 const playerSelection = "scissors";
 const computerSelection = getComputerChoice();
 console.log(playRound(playerSelection, computerSelection));
+
+game();
