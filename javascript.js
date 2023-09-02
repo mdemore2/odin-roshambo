@@ -84,16 +84,27 @@ function displayResult(result) {
         computerScore++;
     }
 
+    let resultSpan = document.createElement('span');
+    resultSpan.textContent = "\n" + result + "\t" + playerScore + ' - ' + computerScore;
+    results.appendChild(resultSpan);
+
     roundCount++;
     if (roundCount == numRounds) {
-        console.log('FINAL SCORE: ' + playerScore + ' - ' + computerScore);
+
+        let finalScore = document.createElement('span');
+        let finalText = '\n\nFINAL SCORE: ' + playerScore + ' - ' + computerScore;
+
         if (playerScore == computerScore){
-            console.log("It's a draw!");
+            finalText = finalText + "\nIt's a draw!";
         } else if (playerScore > computerScore){
-            console.log('You win!');
+            finalText = finalText + "\nYou win!";
         } else {
-            console.log('You lose!');
+            finalText = finalText + "\nYou lose!";
         }
+        finalText = finalText +"\nRefresh the page to play again!";
+        finalScore.textContent = finalText;
+        results.appendChild(finalScore);
+
         buttons.forEach((button) => {
             button.removeEventListener('click', playGameOnClick);
         });
@@ -107,5 +118,6 @@ buttons.forEach((button) => {
     button.addEventListener('click', playGameOnClick);
 });
 
+const results = document.querySelector('.results');
 
 
