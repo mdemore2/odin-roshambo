@@ -1,4 +1,6 @@
 const choices = ['Rock', 'Paper', 'Scissors'];
+const numRounds = 5;
+
 let roundCount = 0;
 let playerScore = 0;
 let computerScore = 0;
@@ -83,7 +85,7 @@ function displayResult(result) {
     }
 
     roundCount++;
-    if (roundCount == 5) {
+    if (roundCount == numRounds) {
         console.log('FINAL SCORE: ' + playerScore + ' - ' + computerScore);
         if (playerScore == computerScore){
             console.log("It's a draw!");
