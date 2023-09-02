@@ -40,7 +40,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-function game(){
+function autoGame(){
     let playerScore = 0;
     let computerScore = 0;
     for (let round = 0; round < 5; round++){
@@ -63,9 +63,20 @@ function game(){
     }
 }
 
+function playGameOnClick(e) {
+    console.log(e.currentTarget.className);
+    let playerSelection = e.currentTarget.className;
+    let result = playRound(playerSelection, getComputerChoice());
+    console.log(result);
+}
 
-const playerSelection = "scissors";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
 
-game();
+    button.addEventListener('click', (e) => {
+      playGameOnClick(e);
+    });
+  });
+
+
+
