@@ -1,4 +1,7 @@
 const choices = ['Rock', 'Paper', 'Scissors'];
+let roundCount = 0;
+let playerScore = 0;
+let computerScore = 0;
 
 function getComputerChoice() {
     return choices[(Math.floor(Math.random() * choices.length))];
@@ -67,16 +70,40 @@ function playGameOnClick(e) {
     console.log(e.currentTarget.className);
     let playerSelection = e.currentTarget.className;
     let result = playRound(playerSelection, getComputerChoice());
+    displayResult(result);
     console.log(result);
+}
+
+function displayResult(result) {
+
+    if (result.includes('win')) {
+        playerScore++;
+    } else if (result.includes('lose')) {
+        computerScore++;
+    }
+
+    roundCount++;
+    if (roundCount == 5) {
+        console.log('FINAL SCORE: ' + playerScore + ' - ' + computerScore);
+        if (playerScore == computerScore){
+            console.log("It's a draw!");
+        } else if (playerScore > computerScore){
+            console.log('You win!');
+        } else {
+            console.log('You lose!');
+        }
+        buttons.forEach((button) => {
+            button.removeEventListener('click', playGameOnClick);
+        });
+
+    }
+
 }
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
-
-    button.addEventListener('click', (e) => {
-      playGameOnClick(e);
-    });
-  });
+    button.addEventListener('click', playGameOnClick);
+});
 
 
 
