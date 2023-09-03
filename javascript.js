@@ -1,4 +1,9 @@
 const choices = ['Rock', 'Paper', 'Scissors'];
+const numRounds = 5;
+
+let roundCount = 0;
+let playerScore = 0;
+let computerScore = 0;
 
 function getComputerChoice() {
     return choices[(Math.floor(Math.random() * choices.length))];
@@ -40,7 +45,7 @@ function playRound(playerSelection, computerSelection){
     }
 }
 
-function game(){
+function autoGame(){
     let playerScore = 0;
     let computerScore = 0;
     for (let round = 0; round < 5; round++){
@@ -63,9 +68,56 @@ function game(){
     }
 }
 
+function playGameOnClick(e) {
+    console.log(e.currentTarget.className);
+    let playerSelection = e.currentTarget.className;
+    let result = playRound(playerSelection, getComputerChoice());
+    displayResult(result);
+    console.log(result);
+}
 
-const playerSelection = "scissors";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function displayResult(result) {
 
-game();
+    if (result.includes('win')) {
+        playerScore++;
+    } else if (result.includes('lose')) {
+        computerScore++;
+    }
+
+    let resultSpan = document.createElement('span');
+    resultSpan.textContent = "\n" + result + "\t" + playerScore + ' - ' + computerScore;
+    results.appendChild(resultSpan);
+
+    roundCount++;
+    if (roundCount == numRounds) {
+
+        let finalScore = document.createElement('span');
+        let finalText = '\n\nFINAL SCORE: ' + playerScore + ' - ' + computerScore;
+
+        if (playerScore == computerScore){
+            finalText = finalText + "\nIt's a draw!";
+        } else if (playerScore > computerScore){
+            finalText = finalText + "\nYou win!";
+        } else {
+            finalText = finalText + "\nYou lose!";
+        }
+        finalText = finalText +"\nRefresh the page to play again!";
+        finalScore.textContent = finalText;
+        results.appendChild(finalScore);
+
+        buttons.forEach((button) => {
+            button.removeEventListener('click', playGameOnClick);
+        });
+
+    }
+
+}
+
+const buttons = document.querySelectorAll('button');
+buttons.forEach((button) => {
+    button.addEventListener('click', playGameOnClick);
+});
+
+const results = document.querySelector('.results');
+
+
